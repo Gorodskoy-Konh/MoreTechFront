@@ -24,10 +24,6 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
     final officeState = context.watch<OfficeCubit>().state;
     final locationState = context.watch<LocationCubit>().state;
     final mapState = context.watch<MapCubit>().state;
-    final officeMarkers = switch (officeState) {
-      OfficeFetched(:final officeMarkers) => officeMarkers.toList(),
-      _ => <Marker>[],
-    };
     final currentLocation = switch (locationState) {
       LocationPermissionGranted locationState => locationState.latLng,
       _ => null,
@@ -96,17 +92,22 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                 myLocationEnabled: true,
               ),
               Positioned(
-                bottom: 50,
-                left: 30,
-                height: 50,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    context.read<MapCubit>().buildRoute(
-                          currentLocation!,
-                          officeMarkers[0].position,
-                          RouteMode.driving,
-                        );
-                  },
+                bottom: 0,
+                top: 10,
+                left: 0,
+                right: 0,
+                child: DraggableScrollableSheet(
+                  initialChildSize: 0.4,
+                  minChildSize: 0.2,
+                  maxChildSize: 0.8,
+                  builder: (context, controller) => Container(
+                    color: Colors.blueAccent,
+                    child: ListView.builder(
+                      controller: controller,
+                      itemBuilder: (context, id) => Text('Text $id'),
+                      itemCount: 10,
+                    ),
+                  ),
                 ),
               ),
             ],
