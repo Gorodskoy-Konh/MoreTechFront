@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:more_tech_front/features/office_overview/domain/models/working_hours/working_hours.dart';
 
 part 'office.freezed.dart';
 
@@ -10,7 +11,7 @@ class Office with _$Office {
     required int id,
     required String name,
     required String address,
-    required String workingHours,
+    required List<WorkingHours> workingHours,
     required double latitude,
     required double longitude,
 }) = _Office;
