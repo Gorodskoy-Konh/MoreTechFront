@@ -20,8 +20,8 @@ WorkingHours _$WorkingHoursFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WorkingHours {
-  String get begin => throw _privateConstructorUsedError;
-  String get end => throw _privateConstructorUsedError;
+  DateTime? get begin => throw _privateConstructorUsedError;
+  DateTime? get end => throw _privateConstructorUsedError;
   String get day => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $WorkingHoursCopyWith<$Res> {
           WorkingHours value, $Res Function(WorkingHours) then) =
       _$WorkingHoursCopyWithImpl<$Res, WorkingHours>;
   @useResult
-  $Res call({String begin, String end, String day});
+  $Res call({DateTime? begin, DateTime? end, String day});
 }
 
 /// @nodoc
@@ -52,19 +52,19 @@ class _$WorkingHoursCopyWithImpl<$Res, $Val extends WorkingHours>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? begin = null,
-    Object? end = null,
+    Object? begin = freezed,
+    Object? end = freezed,
     Object? day = null,
   }) {
     return _then(_value.copyWith(
-      begin: null == begin
+      begin: freezed == begin
           ? _value.begin
           : begin // ignore: cast_nullable_to_non_nullable
-              as String,
-      end: null == end
+              as DateTime?,
+      end: freezed == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$WorkingHoursImplCopyWith<$Res>
       __$$WorkingHoursImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String begin, String end, String day});
+  $Res call({DateTime? begin, DateTime? end, String day});
 }
 
 /// @nodoc
@@ -95,19 +95,19 @@ class __$$WorkingHoursImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? begin = null,
-    Object? end = null,
+    Object? begin = freezed,
+    Object? end = freezed,
     Object? day = null,
   }) {
     return _then(_$WorkingHoursImpl(
-      begin: null == begin
+      begin: freezed == begin
           ? _value.begin
           : begin // ignore: cast_nullable_to_non_nullable
-              as String,
-      end: null == end
+              as DateTime?,
+      end: freezed == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -119,16 +119,15 @@ class __$$WorkingHoursImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$WorkingHoursImpl implements _WorkingHours {
-  const _$WorkingHoursImpl(
-      {required this.begin, required this.end, required this.day});
+  const _$WorkingHoursImpl({this.begin, this.end, required this.day});
 
   factory _$WorkingHoursImpl.fromJson(Map<String, dynamic> json) =>
       _$$WorkingHoursImplFromJson(json);
 
   @override
-  final String begin;
+  final DateTime? begin;
   @override
-  final String end;
+  final DateTime? end;
   @override
   final String day;
 
@@ -167,17 +166,17 @@ class _$WorkingHoursImpl implements _WorkingHours {
 
 abstract class _WorkingHours implements WorkingHours {
   const factory _WorkingHours(
-      {required final String begin,
-      required final String end,
+      {final DateTime? begin,
+      final DateTime? end,
       required final String day}) = _$WorkingHoursImpl;
 
   factory _WorkingHours.fromJson(Map<String, dynamic> json) =
       _$WorkingHoursImpl.fromJson;
 
   @override
-  String get begin;
+  DateTime? get begin;
   @override
-  String get end;
+  DateTime? get end;
   @override
   String get day;
   @override

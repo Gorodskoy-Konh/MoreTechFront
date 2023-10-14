@@ -7,8 +7,8 @@ part 'working_hours.g.dart';
 @freezed
 class WorkingHours with _$WorkingHours {
   const factory WorkingHours({
-    required String begin,
-    required String end,
+    DateTime? begin,
+    DateTime? end,
     required String day,
   }) = _WorkingHours;
 

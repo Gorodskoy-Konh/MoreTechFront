@@ -29,6 +29,10 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
       LocationPermissionGranted locationState => locationState.latLng,
       _ => null,
     };
+    final selectedOffice = switch (officeState) {
+      OfficeFetched(:final selectedOffice) => selectedOffice,
+      _ => null,
+    };
     return SafeArea(
       child: Scaffold(
         // body: Placeholder(),
@@ -93,6 +97,19 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                 },
                 myLocationEnabled: true,
               ),
+              if (selectedOffice != null)
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: FloatingActionButton(
+                    shape: const CircleBorder(),
+                    onPressed: () {
+                      context.read<OfficeCubit>().selectOffice(null);
+                      context.read<MapCubit>().removeRoute();
+                    },
+                    child: const Icon(Icons.arrow_back),
+                  ),
+                ),
               Positioned(
                 bottom: 0,
                 top: 10,
@@ -103,10 +120,6 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                   minChildSize: 0.2,
                   maxChildSize: 0.8,
                   builder: (context, controller) {
-                    final selectedOffice = switch (officeState) {
-                      OfficeFetched(:final selectedOffice) => selectedOffice,
-                      _ => null,
-                    };
                     return OfficeBottomTile(
                       scrollController: controller,
                       office: selectedOffice,

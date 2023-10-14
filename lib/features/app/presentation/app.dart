@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => getIt.get<MapCubit>()),
         BlocProvider(create: (_) => getIt.get<OptimalOfficeCubit>()),
-        BlocProvider(create: (_) => getIt.get<ProductChooseCubit>()),
+        BlocProvider(
+          create: (_) => getIt.get<ProductChooseCubit>()..getAllProducts(),
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: getIt.get<AppRouter>().config(),

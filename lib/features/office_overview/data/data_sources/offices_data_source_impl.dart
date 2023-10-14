@@ -5,6 +5,7 @@ import 'package:more_tech_front/common/logger/logger.dart';
 import 'package:more_tech_front/features/office_overview/data/data_sources/offices_data_source.dart';
 import 'package:more_tech_front/features/office_overview/data/dto/optimal_office_dto.dart';
 import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
+import 'package:more_tech_front/features/office_overview/domain/models/service/product.dart';
 
 import '../../../../common/constants/constants.dart';
 
@@ -21,7 +22,7 @@ class OfficesDataSourceImpl implements OfficesDataSource {
 
   @override
   Future<List<Office>?> getOffices(
-      String? city, LatLng? position, int? radius) async {
+      [String? city, LatLng? position, int? radius]) async {
     Map<String, dynamic> queryParameters = {};
     if (city != null) {
       queryParameters['city'] = city;
@@ -54,10 +55,10 @@ class OfficesDataSourceImpl implements OfficesDataSource {
   }
 
   @override
-  Future<List<String>?> getAllProducts() async {
+  Future<List<Product>?> getAllProducts() async {
     try {
       final response = await _dio.get(kGetAllProducts);
-      return response.data as List<String>;
+      return (response.data as List).map((e) => Product.fromJson(e)).toList();
     } on DioError catch (e, stackTrace) {
       logger.e(
         e,
@@ -69,11 +70,13 @@ class OfficesDataSourceImpl implements OfficesDataSource {
 
   @override
   Future<List<OptimalOfficeDto>?> getOptimalOffices(
-      String product, DateTime dateTime) async {
+      Product product, DateTime dateTime, LatLng position, double radius,) async {
     final queryParameters = {
-      'product': product,
+      'product': product.name,
       // TODO - check if the format is appropriate
       'booking_time': dateTime,
+      'position': position,
+      'radius': radius,
     };
     try {
       final response = await _dio.get(

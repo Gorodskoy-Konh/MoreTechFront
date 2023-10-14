@@ -9,10 +9,12 @@ class ProductChooseGettingAllProducts extends ProductChooseState {}
 
 class ProductChooseAllProducts extends ProductChooseState {
   final List<Product> products;
-  final int index;
+  final Product? selectedProduct;
+  final TimeOfDay? selectedTime;
 
   ProductChooseAllProducts({
-    this.index = 0,
+    this.selectedProduct,
+    this.selectedTime,
     required this.products,
   });
 }

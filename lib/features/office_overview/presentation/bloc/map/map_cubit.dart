@@ -29,6 +29,10 @@ class MapCubit extends Cubit<MapState> {
     );
   }
 
+  void removeRoute() {
+    emit(MapInitial());
+  }
+
   Future<void> buildRoute(
     LatLng origin,
     LatLng destination,

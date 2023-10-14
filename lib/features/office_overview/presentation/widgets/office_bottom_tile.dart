@@ -5,6 +5,8 @@ import 'package:more_tech_front/features/office_overview/domain/models/office/of
 import 'package:more_tech_front/features/office_overview/presentation/bloc/product_choose/product_choose_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/widgets/working_time.dart';
 
+import '../../domain/models/service/product.dart';
+
 class OfficeBottomTile extends StatefulWidget {
   const OfficeBottomTile(
       {super.key, required this.office, required this.scrollController});
@@ -19,6 +21,21 @@ class OfficeBottomTile extends StatefulWidget {
 class _OfficeBottomTileState extends State<OfficeBottomTile> {
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(255, 255, 255, 0.9),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: ListView(
+          controller: widget.scrollController,
+          children: children(),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> children() {
     List<Widget> children = [];
     final productChooseState = context.watch<ProductChooseCubit>().state;
     if (widget.office != null) {
@@ -72,11 +89,7 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
         ),
       ];
     } else {
-      switch (productChooseState){
-        case ProductChooseInitial _:
-          context.read<ProductChooseCubit>().getAllProducts();
-          //TODO: loading or something for request to all products....
-          break;
+      switch (productChooseState) {
         case ProductChooseGettingAllProducts _:
           children = [
             const Center(
@@ -87,21 +100,83 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
         case ProductChooseAllProducts state:
           children = [
             //TODO: dropdown
+            const SizedBox(
+              height: 15,
+            ),
+            Center(child: Text(context.locale.chooseProduct)),
+            const SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: DropdownButton<Product>(
+                value: state.selectedProduct,
+                items: state.products
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e.name,
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (product) {
+                  if (product != null) {
+                    context.read<ProductChooseCubit>().selectProduct(product);
+                  }
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40,),
+              child: Row(
+                children: [
+                  Text(context.locale.chooseTime),
+                  const SizedBox(width: 5,),
+                  Expanded(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      readOnly: true,
+                      controller: _timeController,
+                      onTap: () {
+                        showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        ).then(
+                          (time) {
+
+                            _timeController.text = time!.format(context);
+                            context.read<ProductChooseCubit>().selectTime(time);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  context.locale.suggestOptimalOffice,
+                ),
+              ),
+            ),
           ];
           break;
       }
     }
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(255, 255, 255, 0.9),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: ListView(
-          controller: widget.scrollController,
-          children: children,
-        ),
-      ),
-    );
+    return children;
   }
+
+  final _timeController = TextEditingController();
 }

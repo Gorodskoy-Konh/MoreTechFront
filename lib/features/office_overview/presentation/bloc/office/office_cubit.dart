@@ -15,7 +15,7 @@ class OfficeCubit extends Cubit<OfficeState> {
 
   final OfficesRepository _officesRepository;
 
-  void selectOffice(Office office) {
+  void selectOffice(Office? office) {
     switch (state) {
       case OfficeFetched state:
         emit(

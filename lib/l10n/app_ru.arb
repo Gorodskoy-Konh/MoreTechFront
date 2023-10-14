@@ -1,5 +1,8 @@
 {
   "appTitle": "Название приложения",
   "showRoute": "Проложить маршрут",
-  "weekend": "Выходной"
+  "weekend": "Выходной",
+  "suggestOptimalOffice": "Подобрать отделение",
+  "chooseProduct": "Выберите продукт",
+  "chooseTime": "Выберите время записи"
 }
