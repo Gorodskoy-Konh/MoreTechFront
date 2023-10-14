@@ -36,6 +36,9 @@ class OfficeFetched extends OfficeState {
             e.latitude,
             e.longitude,
           ),
+          onTap: () {
+            logger.t('Marker ${e.id} pressed');
+          },
         ),
       );
 }

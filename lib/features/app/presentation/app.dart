@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => getIt.get<OfficeCubit>()..fetchOffices(),
         ),
-        BlocProvider(create: (_) => getIt.get<LocationCubit>()..requestLocation(),),
+        BlocProvider(
+          create: (_) => getIt.get<LocationCubit>()..requestLocation(),
+        ),
         BlocProvider(create: (_) => getIt.get<MapCubit>()),
       ],
       child: MaterialApp.router(
