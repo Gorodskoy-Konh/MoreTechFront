@@ -11,6 +11,10 @@ class ProductChooseCubit extends Cubit<ProductChooseState> {
   ProductChooseCubit() : super(ProductChooseInitial());
 
   void getAllProducts(){
+    emit(ProductChooseGettingAllProducts());
+    //TODO: Request to back for all types of products
+    List<Product> products = [];
+    emit(ProductChooseAllProducts(products: products));
     // switch(state){
     //   case
     // }

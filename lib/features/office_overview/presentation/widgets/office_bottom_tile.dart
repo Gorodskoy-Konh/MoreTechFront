@@ -73,11 +73,11 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
       ];
     } else {
       switch (productChooseState){
-        case ProductChooseInitial state:
+        case ProductChooseInitial _:
           context.read<ProductChooseCubit>().getAllProducts();
           //TODO: loading or something for request to all products....
           break;
-        case ProductChooseGettingAllProducts state:
+        case ProductChooseGettingAllProducts _:
           children = [
             const Center(
               child: CircularProgressIndicator(),
