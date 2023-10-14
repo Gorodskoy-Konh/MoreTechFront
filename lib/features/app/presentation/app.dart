@@ -8,6 +8,7 @@ import 'package:more_tech_front/features/office_overview/presentation/bloc/offic
 import 'package:more_tech_front/features/office_overview/presentation/bloc/optimal_office/optimal_office_cubit.dart';
 
 import '../../../app_locale.dart';
+import '../../office_overview/presentation/bloc/product_choose/product_choose_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => getIt.get<MapCubit>()),
         BlocProvider(create: (_) => getIt.get<OptimalOfficeCubit>()),
+        BlocProvider(create: (_) => getIt.get<ProductChooseCubit>()),
       ],
       child: MaterialApp.router(
         routerConfig: getIt.get<AppRouter>().config(),

@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../domain/models/office/office.dart';
 
 part 'optimal_office_state.dart';
 
+@injectable
 class OptimalOfficeCubit extends Cubit<OptimalOfficeState> {
   OptimalOfficeCubit() : super(OptimalOfficeInitial());
 

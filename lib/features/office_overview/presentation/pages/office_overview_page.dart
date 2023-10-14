@@ -7,7 +7,6 @@ import 'package:more_tech_front/common/logger/logger.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/map/map_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/office/office_cubit.dart';
-import 'package:more_tech_front/features/office_overview/presentation/bloc/optimal_office/optimal_office_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/widgets/office_bottom_tile.dart';
 
 import '../../../../common/constants/constants.dart';
@@ -99,32 +98,18 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                 top: 10,
                 left: 0,
                 right: 0,
-                child: BlocConsumer<OptimalOfficeCubit, OptimalOfficeState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                  },
-                  builder: (context, state) {
-                    return DraggableScrollableSheet(
-                      initialChildSize: 0.4,
-                      minChildSize: 0.2,
-                      maxChildSize: 0.8,
-                      builder: (context, controller) {
-                        final selectedOffice = switch (officeState) {
-                          OfficeFetched(:final selectedOffice) =>
-                            selectedOffice,
-                          _ => null,
-                        };
-                        if (selectedOffice != null) {
-                          return OfficeBottomTile(
-                            scrollController: controller,
-                            office: selectedOffice,
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
+                child: DraggableScrollableSheet(
+                  initialChildSize: 0.4,
+                  minChildSize: 0.2,
+                  maxChildSize: 0.8,
+                  builder: (context, controller) {
+                    final selectedOffice = switch (officeState) {
+                      OfficeFetched(:final selectedOffice) => selectedOffice,
+                      _ => null,
+                    };
+                    return OfficeBottomTile(
+                      scrollController: controller,
+                      office: selectedOffice,
                     );
                   },
                 ),
