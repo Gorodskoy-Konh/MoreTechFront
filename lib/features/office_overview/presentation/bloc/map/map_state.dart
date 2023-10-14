@@ -16,5 +16,5 @@ class MapInitial extends MapState {}
 class MapRouteBuilt extends MapState {
   final Polyline polyline;
 
-  MapRouteBuilt({required this.polyline});
+  MapRouteBuilt({required this.polyline,});
 }
