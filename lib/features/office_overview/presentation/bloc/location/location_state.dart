@@ -3,8 +3,6 @@ part of 'location_cubit.dart';
 @immutable
 sealed class LocationState {
   const LocationState();
-
-  static const LatLng defaultLocation = LatLng(55.753927, 37.620531);
 }
 
 class LocationInitial extends LocationState {
