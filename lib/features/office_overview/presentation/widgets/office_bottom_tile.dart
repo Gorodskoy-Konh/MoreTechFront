@@ -74,20 +74,6 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
             WorkingTime(
               workingHours: widget.office.workingHours,
             ),
-            // Container(
-            //
-            //   child: Row(
-            //     children: [
-            //       const Icon(Icons.access_time_filled),
-            //       Text(
-            //         widget.office.workingHours,
-            //         style: TextStyle(
-            //           fontSize: 18,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),

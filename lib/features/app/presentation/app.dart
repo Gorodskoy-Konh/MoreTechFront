@@ -5,6 +5,7 @@ import 'package:more_tech_front/common/di/di.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/map/map_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/office/office_cubit.dart';
+import 'package:more_tech_front/features/office_overview/presentation/bloc/optimal_office/optimal_office_cubit.dart';
 
 import '../../../app_locale.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt.get<LocationCubit>()..requestLocation(),
         ),
         BlocProvider(create: (_) => getIt.get<MapCubit>()),
+        BlocProvider(create: (_) => getIt.get<OptimalOfficeCubit>()),
       ],
       child: MaterialApp.router(
         routerConfig: getIt.get<AppRouter>().config(),
