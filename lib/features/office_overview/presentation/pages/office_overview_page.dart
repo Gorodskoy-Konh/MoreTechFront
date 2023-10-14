@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
+import 'package:more_tech_front/features/office_overview/domain/models/working_hours/working_hours.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/map/map_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/office/office_cubit.dart';
+import 'package:more_tech_front/features/office_overview/presentation/widgets/office_bottom_tile.dart';
 
 import '../../../../common/constants/constants.dart';
 
@@ -78,6 +81,31 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                           RouteMode.driving,
                         );
                   },
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: MediaQuery.of(context).size.height / 3,
+                child: OfficeBottomTile(
+                  scrollController: ScrollController(),
+                  office: Office(
+                    id: 1,
+                    name: 'ДО «Солнечногорский» Филиала № 7701 Банка ВТБ (ПАО)',
+                    address: 'ул. Красная, д. 60',
+                    workingHours: [
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+                      WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+                      WorkingHours(begin: '', end: '', day: 'ВС'),
+                    ],
+                    latitude: 0,
+                    longitude: 0,
+                  ),
                 ),
               ),
             ],
