@@ -6,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:more_tech_front/features/office_overview/presentation/bloc/office_cubit.dart';
-
-import '../../../../common/logger/logger.dart';
+import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
+import 'package:more_tech_front/features/office_overview/presentation/bloc/office/office_cubit.dart';
 
 @RoutePage()
 class OfficeOverviewPage extends StatefulWidget {
@@ -22,35 +21,44 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  // static const CameraPosition _kGooglePlex = ;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Geolocator.requestPermission();
   }
 
   @override
   Widget build(BuildContext context) {
-    final officeCubit = context.watch<OfficeCubit>();
-    final officeMarkers = officeCubit.officeMarkers ?? [];
+    final officeState = context.watch<OfficeCubit>().state;
+    final locationState = context.watch<LocationCubit>().state;
     return SafeArea(
       child: Scaffold(
         // body: Placeholder(),
-        body: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          markers: Set.from(officeMarkers),
-          polylines: Set.from(polyline),
-          myLocationEnabled: true,
-        ),
+        body: switch (locationState) {
+          LocationPermissionGranted locationState => GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(
+                target: locationState.latLng,
+                zoom: 10.4746,
+              ),
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              markers: Set.from(
+                switch (officeState) {
+                  OfficeFetched(:final officeMarkers) => officeMarkers,
+                  _ => const Iterable.empty(),
+                },
+              ),
+              polylines: Set.from(polyline),
+              myLocationEnabled: true,
+            ),
+          _ => const Center(
+              child: CircularProgressIndicator(),
+            ),
+        },
       ),
     );
   }
@@ -58,14 +66,6 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission();
     return await Geolocator.getCurrentPosition();
-  }
-
-  Marker _createMarker() {
-    return const Marker(
-      markerId: MarkerId('marker_1'),
-      position: LatLng(37.43296265331129, -122.08832357078792),
-      icon: BitmapDescriptor.defaultMarker,
-    );
   }
 
   GoogleMapPolyline googleMapPolyline =
@@ -81,15 +81,20 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
         destination: end,
         mode: RouteMode.driving)) as Iterable<LatLng>);
 
-    setState(() {
-      polyline.add(Polyline(
-          polylineId: PolylineId('iter'),
-          visible: true,
-          points: routeCoords,
-          width: 4,
-          color: Colors.blue,
-          startCap: Cap.roundCap,
-          endCap: Cap.buttCap));
-    });
+    setState(
+      () {
+        polyline.add(
+          Polyline(
+            polylineId: PolylineId('iter'),
+            visible: true,
+            points: routeCoords,
+            width: 4,
+            color: Colors.blue,
+            startCap: Cap.roundCap,
+            endCap: Cap.buttCap,
+          ),
+        );
+      },
+    );
   }
 }

@@ -5,24 +5,22 @@ import 'package:injectable/injectable.dart';
 import 'package:more_tech_front/common/logger/logger.dart';
 import 'package:more_tech_front/features/office_overview/domain/repositories/offices_repository.dart';
 
-import '../../domain/models/office/office.dart';
-
-part 'office_cubit.freezed.dart';
+import '../../../domain/models/office/office.dart';
 
 part 'office_state.dart';
 
 @injectable
 class OfficeCubit extends Cubit<OfficeState> {
-  OfficeCubit(this._officesRepository) : super(const OfficeState.initial());
+  OfficeCubit(this._officesRepository) : super(const OfficeInitial());
 
   final OfficesRepository _officesRepository;
 
   Future<void> fetchOffices() async {
-    emit(const OfficeState.loading());
+    emit(const OfficeLoading());
     try {
       final offices = await _officesRepository.getOffices();
       emit(
-        OfficeState.officesFetched(
+        OfficeFetched(
           offices: offices,
         ),
       );
@@ -31,24 +29,7 @@ class OfficeCubit extends Cubit<OfficeState> {
         e,
         stackTrace: stackTrace,
       );
+      emit(OfficeError(e.toString()));
     }
-  }
-
-  Iterable<Marker>? get officeMarkers {
-    switch (state) {
-      case OfficesFetched(:final offices):
-        return offices
-            .map(
-              (e) => Marker(
-                markerId: MarkerId(e.id.toString()),
-                icon: BitmapDescriptor.defaultMarker,
-                position: LatLng(
-                  e.latitude,
-                  e.longitude,
-                ),
-              ),
-            );
-    }
-    return null;
   }
 }
