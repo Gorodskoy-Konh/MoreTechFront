@@ -28,26 +28,30 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
           children: [
             Container(
               margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Row(
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   const Icon(
                     Icons.location_on,
                     color: Color.fromRGBO(127, 127, 127, 1),
                   ),
-                  Text(
-                    widget.office.address,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Color.fromRGBO(127, 127, 127, 1),
+                  Expanded(
+                    child: Text(
+                      widget.office.address,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color.fromRGBO(127, 127, 127, 1),
+                        overflow: TextOverflow.fade,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.all(12),
-              decoration: BoxDecoration(),
+              margin: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(),
               child: Text(
                 widget.office.name,
                 style: const TextStyle(
@@ -62,7 +66,7 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
               },
               child: Text(
                 context.locale.showRoute,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),

@@ -23,9 +23,11 @@ class OfficeError extends OfficeState {
 
 class OfficeFetched extends OfficeState {
   final List<Office> offices;
+  final Office? selectedOffice;
 
   const OfficeFetched({
     required this.offices,
+    this.selectedOffice,
   });
 
   Iterable<Marker> get officeMarkers => offices.map(

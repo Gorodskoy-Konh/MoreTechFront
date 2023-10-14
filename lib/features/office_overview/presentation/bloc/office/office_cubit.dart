@@ -15,6 +15,21 @@ class OfficeCubit extends Cubit<OfficeState> {
 
   final OfficesRepository _officesRepository;
 
+  void selectOffice(Office office) {
+    switch (state) {
+      case OfficeFetched state:
+        emit(
+          OfficeFetched(
+            offices: state.offices,
+            selectedOffice: office,
+          ),
+        );
+        return;
+      default:
+        return;
+    }
+  }
+
   Future<void> fetchOffices() async {
     emit(const OfficeLoading());
     try {

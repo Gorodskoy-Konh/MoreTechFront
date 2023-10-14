@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
-import 'package:more_tech_front/features/office_overview/domain/models/working_hours/working_hours.dart';
 import 'package:more_tech_front/common/logger/logger.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/map/map_cubit.dart';
@@ -75,6 +73,7 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                         ),
                         onTap: () {
                           logger.t('Marker tapped');
+                          context.read<OfficeCubit>().selectOffice(e);
                           context.read<MapCubit>().buildRoute(
                                 currentLocation!,
                                 LatLng(
@@ -103,39 +102,22 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                   initialChildSize: 0.4,
                   minChildSize: 0.2,
                   maxChildSize: 0.8,
-                  builder: (context, controller) => Container(
-                    color: Colors.blueAccent,
-                    child: ListView.builder(
-                      controller: controller,
-                      itemBuilder: (context, id) => Text('Text $id'),
-                      itemCount: 10,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: MediaQuery.of(context).size.height / 3,
-                child: OfficeBottomTile(
-                  scrollController: ScrollController(),
-                  office: Office(
-                    id: 1,
-                    name: 'ДО «Солнечногорский» Филиала № 7701 Банка ВТБ (ПАО)',
-                    address: 'ул. Красная, д. 60',
-                    workingHours: [
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
-                      WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
-                      WorkingHours(begin: '', end: '', day: 'ВС'),
-                    ],
-                    latitude: 0,
-                    longitude: 0,
-                  ),
+                  builder: (context, controller) {
+                    final selectedOffice = switch (officeState) {
+                      OfficeFetched(:final selectedOffice) => selectedOffice,
+                      _ => null,
+                    };
+                    if (selectedOffice != null) {
+                      return OfficeBottomTile(
+                        scrollController: controller,
+                        office: selectedOffice,
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
               ),
             ],

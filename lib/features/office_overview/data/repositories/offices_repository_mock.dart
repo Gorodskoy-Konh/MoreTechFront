@@ -2,6 +2,8 @@ import 'package:injectable/injectable.dart';
 import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
 import 'package:more_tech_front/features/office_overview/domain/repositories/offices_repository.dart';
 
+import '../../domain/models/working_hours/working_hours.dart';
+
 @Injectable(as: OfficesRepository)
 class OfficesRepositoryMock implements OfficesRepository {
   @override
@@ -12,7 +14,15 @@ class OfficesRepositoryMock implements OfficesRepository {
           id: 1,
           name: 'ДО «Солнечногорский» Филиала № 7701 Банка ВТБ (ПАО)',
           address: '141506, Московская область, г. Солнечногорск, ул. Красная, д. 60',
-          workingHours: [],
+          workingHours: [
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+            WorkingHours(begin: '', end: '', day: 'ВС'),
+          ],
           latitude: 56.184479,
           longitude: 36.984314,
         ),
@@ -20,7 +30,15 @@ class OfficesRepositoryMock implements OfficesRepository {
           id: 2,
           name: 'ДО «На Баранова» Филиала № 7701 Банка ВТБ (ПАО)',
           address: '141500, Московская область, г. Солнечногорск, ул. Баранова, д. 1, 1-й этаж',
-          workingHours: [],
+          workingHours: [
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+            WorkingHours(begin: '', end: '', day: 'ВС'),
+          ],
           latitude: 56.183239,
           longitude: 36.9757,
         ),
@@ -28,7 +46,15 @@ class OfficesRepositoryMock implements OfficesRepository {
           id: 3,
           name: 'ДО «Лобня» Филиала № 7701 Банка ВТБ (ПАО)',
           address: '141730, Московская область, г. Лобня, ул. Ленина, д. 9',
-          workingHours: [],
+          workingHours: [
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+            WorkingHours(begin: '', end: '', day: 'ВС'),
+          ],
           latitude: 56.012386,
           longitude: 37.482059,
         ),
@@ -36,7 +62,15 @@ class OfficesRepositoryMock implements OfficesRepository {
           id: 4,
           name: 'ДО «Черноголовский» Филиала № 7701 Банка ВТБ (ПАО)',
           address: '142432, Московская область, г. Черноголовка, пр-д Строителей, д. 1б',
-          workingHours: [],
+          workingHours: [
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+            WorkingHours(begin: '', end: '', day: 'ВС'),
+          ],
           latitude: 56.011509,
           longitude: 38.377728,
         ),
@@ -44,7 +78,15 @@ class OfficesRepositoryMock implements OfficesRepository {
           id: 5,
           name: 'ДО «Пушкинский» Филиала № 7701 Банка ВТБ (ПАО)',
           address: '141207, Московская область, г. Пушкино, ул. Тургенева, д. 24, пом. 018',
-          workingHours: [],
+          workingHours: [
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПН'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ВТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СР'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ЧТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'ПТ'),
+            WorkingHours(begin: '9:00', end: '18:00', day: 'СБ'),
+            WorkingHours(begin: '', end: '', day: 'ВС'),
+          ],
           latitude: 56.010849,
           longitude: 37.854359,
         ),
