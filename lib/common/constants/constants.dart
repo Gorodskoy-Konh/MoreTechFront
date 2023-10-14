@@ -1,0 +1,1 @@
+const kDefaultMapZoom = 10.5;
