@@ -6,3 +6,8 @@ const kDefaultCameraPosition = CameraPosition(
   zoom: kDefaultMapZoom,
 );
 const kGoogleApiKey = "AIzaSyDEdr6ih-RBXSKUYx9QDEP-VRRzL8rZC2c";
+
+const kBaseUrl = '';
+const kGetOffices = '';
+const kGetAllProducts = '';
+const kGetOptimalOffices = '';
