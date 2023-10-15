@@ -469,6 +469,80 @@ class OfficesRepositoryMock implements OfficesRepository {
           ),
           estimatedTime: 1000,
         ),
+        OptimalOfficeDto(
+          office: Office(
+            id: 4,
+            name: 'ДО «Черноголовский» Филиала № 7701 Банка ВТБ (ПАО)',
+            address:
+            '142432, Московская область, г. Черноголовка, пр-д Строителей, д. 1б',
+            workingHours: [
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ПН'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ВТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'СР'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ЧТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ПТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'СБ'),
+              WorkingHours(day: 'ВС'),
+            ],
+            latitude: 56.011509,
+            longitude: 38.377728,
+          ),
+          estimatedTime: 1200,
+        ),
       ],
     );
   }

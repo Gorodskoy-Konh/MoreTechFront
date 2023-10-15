@@ -6,6 +6,7 @@ import 'package:more_tech_front/features/office_overview/presentation/bloc/produ
 import 'package:more_tech_front/features/office_overview/presentation/widgets/working_time.dart';
 
 import '../../domain/models/service/product.dart';
+import '../bloc/location/location_cubit.dart';
 
 class OfficeBottomTile extends StatefulWidget {
   const OfficeBottomTile(
@@ -36,6 +37,11 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
   }
 
   List<Widget> children() {
+    final locationState = context.watch<LocationCubit>().state;
+    final currentLocation = switch (locationState) {
+      LocationPermissionGranted locationState => locationState.latLng,
+      _ => null,
+    };
     List<Widget> children = [];
     final productChooseState = context.watch<ProductChooseCubit>().state;
     if (widget.office != null) {
@@ -199,7 +205,9 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<ProductChooseCubit>().getOptimalOffices(currentLocation!, 5);
+                },
                 child: Text(
                   context.locale.suggestOptimalOffice,
                 ),
