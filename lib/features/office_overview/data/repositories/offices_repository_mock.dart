@@ -393,7 +393,83 @@ class OfficesRepositoryMock implements OfficesRepository {
   @override
   Future<List<OptimalOfficeDto>> getOptimalOffices(
       Product product, DateTime dateTime, LatLng position, double radius) {
-    // TODO: implement getOptimalOffices
-    throw UnimplementedError();
+    return Future(
+      () => [
+        OptimalOfficeDto(
+          office: Office(
+            id: 5,
+            name: 'ДО «Пушкинский» Филиала № 7701 Банка ВТБ (ПАО)',
+            address:
+                '141207, Московская область, г. Пушкино, ул. Тургенева, д. 24, пом. 018',
+            workingHours: [
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ПН'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ВТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'СР'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ЧТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'ПТ'),
+              WorkingHours(
+                  begin: DateTime.now().copyWith(
+                    hour: 9,
+                    minute: 0,
+                  ),
+                  end: DateTime.now().copyWith(
+                    hour: 18,
+                    minute: 0,
+                  ),
+                  day: 'СБ'),
+              WorkingHours(day: 'ВС'),
+            ],
+            latitude: 56.010849,
+            longitude: 37.854359,
+          ),
+          estimatedTime: 1000,
+        ),
+      ],
+    );
   }
 }
