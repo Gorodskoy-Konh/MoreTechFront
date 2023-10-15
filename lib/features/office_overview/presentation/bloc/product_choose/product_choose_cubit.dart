@@ -18,14 +18,15 @@ class ProductChooseCubit extends Cubit<ProductChooseState> {
 
   final OfficesRepository officesRepository;
 
-  void getAllProducts() {
+  Future<void> getAllProducts() async {
     emit(ProductChooseGettingAllProducts());
     //TODO: Request to back for all types of products
-    List<Product> products = [
-      Product(name: 'Продукт 1'),
-      Product(name: 'Продукт 2'),
-      Product(name: 'Продукт 3')
-    ];
+    List<Product> products = await officesRepository.getAllProducts();
+    // List<Product> products = [
+    //   Product(name: 'Продукт 1'),
+    //   Product(name: 'Продукт 2'),
+    //   Product(name: 'Продукт 3')
+    // ];
     emit(ProductChooseAllProducts(products: products));
     // switch(state){
     //   case

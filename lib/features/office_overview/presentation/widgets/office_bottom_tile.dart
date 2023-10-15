@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_map_polyline_new/google_map_polyline_new.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:more_tech_front/app_locale.dart';
 import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/product_choose/product_choose_cubit.dart';
@@ -7,6 +11,8 @@ import 'package:more_tech_front/features/office_overview/presentation/widgets/wo
 
 import '../../domain/models/service/product.dart';
 import '../bloc/location/location_cubit.dart';
+import '../bloc/map/map_cubit.dart';
+import '../bloc/office/office_cubit.dart';
 
 class OfficeBottomTile extends StatefulWidget {
   const OfficeBottomTile(
@@ -108,7 +114,7 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
             Center(
               child: ListTile(
                 title: Text(context.locale.fastest),
-                subtitle: Text('${state.estimatedTimeFastest / 60}'),
+                subtitle: Text('${(state.estimatedTimeFastest / 60).round()}'),
               ),
             ),
             const SizedBox(
@@ -117,18 +123,50 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
             TextButton(
               onPressed: () {
                 // TODO: route
+                // context.read<MapCubit>().focusOnPoint(currentLocation!, LatLng(
+                //   state.officeFastest.latitude,
+                //   state.officeFastest.longitude,
+                // ));
+                context.read<OfficeCubit>().selectOffice(state.officeFastest);
+                context.read<MapCubit>().moveCamera(LatLng(
+                  state.officeFastest.latitude,
+                  state.officeFastest.longitude,
+                ));
+
+                // context.read<MapCubit>().buildRoute(
+                //       currentLocation!,
+                //       LatLng(
+                //         state.officeFastest.latitude,
+                //         state.officeFastest.longitude,
+                //       ),
+                //       RouteMode.driving,
+                //     );
+
               },
               child: Text(state.officeFastest.address),
             ),
             Center(
               child: ListTile(
                 title: Text(context.locale.closest),
-                subtitle: Text('${state.estimatedTimeClosest / 60}'),
+                subtitle: Text('${(state.estimatedTimeClosest / 60).round()}'),
               ),
             ),
             TextButton(
               onPressed: () {
                 // TODO: route
+                // context.read<OfficeCubit>().selectOffice(state.officeClosest);
+                // context.read<MapCubit>().buildRoute(
+                //   currentLocation!,
+                //   LatLng(
+                //     state.officeClosest.latitude,
+                //     state.officeClosest.longitude,
+                //   ),
+                //   RouteMode.driving,
+                // );
+                context.read<MapCubit>().moveCamera(LatLng(
+                  state.officeClosest.latitude,
+                  state.officeClosest.longitude,
+                ));
               },
               child: Text(state.officeClosest.address),
             ),
@@ -206,7 +244,9 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: ElevatedButton(
                 onPressed: () {
-                  context.read<ProductChooseCubit>().getOptimalOffices(currentLocation!, 5);
+                  context
+                      .read<ProductChooseCubit>()
+                      .getOptimalOffices(currentLocation!, 5);
                 },
                 child: Text(
                   context.locale.suggestOptimalOffice,

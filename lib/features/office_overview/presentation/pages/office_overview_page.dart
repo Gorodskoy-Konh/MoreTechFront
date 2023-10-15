@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:more_tech_front/common/logger/logger.dart';
+import 'package:more_tech_front/features/office_overview/domain/models/office/office.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/location/location_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/map/map_cubit.dart';
 import 'package:more_tech_front/features/office_overview/presentation/bloc/office/office_cubit.dart';
@@ -25,6 +26,10 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
     final officeState = context.watch<OfficeCubit>().state;
     final locationState = context.watch<LocationCubit>().state;
     final mapState = context.watch<MapCubit>().state;
+    final List<Office> offices = switch (officeState){
+      OfficeFetched officeState => officeState.offices,
+      _ => [],
+    };
     final currentLocation = switch (locationState) {
       LocationPermissionGranted locationState => locationState.latLng,
       _ => null,
@@ -61,11 +66,16 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                 zoomControlsEnabled: false,
                 initialCameraPosition: kDefaultCameraPosition,
                 onMapCreated: (GoogleMapController controller) {
-                  context
-                      .read<MapCubit>()
-                      .state
-                      .controllerCompleter
-                      .complete(controller);
+                  logger.e('Map recreated!');
+                  context.read<MapCubit>().state.controller = controller;
+                  // context
+                  //     .read<MapCubit>()
+                  //     .state
+                  //     .controllerCompleter
+                  //     .complete(controller);
+                },
+                onCameraMoveStarted: () {
+                  logger.i('Camera more started');
                 },
                 markers: Set.from(switch (officeState) {
                   OfficeFetched(:final offices) => offices.map(
@@ -78,7 +88,7 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                         onTap: () {
                           logger.t('Marker tapped');
                           context.read<OfficeCubit>().selectOffice(e);
-                          context.read<MapCubit>().buildRoute(
+                          buildRoute(
                                 currentLocation!,
                                 LatLng(
                                   e.latitude,
@@ -91,10 +101,7 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                     ),
                   _ => <Marker>[],
                 }),
-                polylines: switch (mapState) {
-                  MapRouteBuilt mapState => {mapState.polyline},
-                  _ => const {},
-                },
+                polylines: polyline,
                 myLocationEnabled: true,
               ),
               if (selectedOffice != null)
@@ -110,6 +117,17 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
                     child: const Icon(Icons.arrow_back),
                   ),
                 ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: FloatingActionButton(
+                  shape: const CircleBorder(),
+                  onPressed: () {
+                    context.read<MapCubit>().moveCamera(LatLng(offices[0].latitude, offices[0].longitude));
+                  },
+                  child: const Icon(Icons.abc),
+                ),
+              ),
               Positioned(
                 bottom: 0,
                 top: 10,
@@ -133,4 +151,33 @@ class _OfficeOverviewPageState extends State<OfficeOverviewPage> {
       ),
     );
   }
+  Future<void> buildRoute(
+      LatLng origin,
+      LatLng destination,
+      RouteMode routeMode,
+      ) async {
+    // logger.t('MapState: $state');
+    final points = await googleMapPolyline.getCoordinatesWithLocation(
+      origin: origin,
+      destination: destination,
+      mode: RouteMode.driving,
+    );
+    assert(points != null);
+    final polyline1 = Polyline(
+      polylineId: const PolylineId('polylineId'),
+      points: points ?? [],
+      width: 4,
+      color: Colors.blue,
+      startCap: Cap.roundCap,
+      endCap: Cap.buttCap,
+    );
+    polyline.clear();
+    polyline.add(polyline1);
+    setState(() {
+
+    });
+  }
+  final Set<Polyline> polyline = {};
+
+  final googleMapPolyline = GoogleMapPolyline(apiKey: kGoogleApiKey);
 }
