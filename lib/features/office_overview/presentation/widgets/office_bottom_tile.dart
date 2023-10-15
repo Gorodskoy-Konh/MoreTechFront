@@ -97,6 +97,37 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
             ),
           ];
           break;
+        case ProductChooseRecivedOffices state:
+          children = [
+            Center(
+              child: ListTile(
+                title: Text(context.locale.fastest),
+                subtitle: Text('${state.estimatedTimeFastest / 60}'),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () {
+                // TODO: route
+              },
+              child: Text(state.officeFastest.address),
+            ),
+            Center(
+              child: ListTile(
+                title: Text(context.locale.closest),
+                subtitle: Text('${state.estimatedTimeClosest / 60}'),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // TODO: route
+              },
+              child: Text(state.officeClosest.address),
+            ),
+          ];
+          break;
         case ProductChooseAllProducts state:
           children = [
             //TODO: dropdown
@@ -132,11 +163,15 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
               height: 15,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
+              ),
               child: Row(
                 children: [
                   Text(context.locale.chooseTime),
-                  const SizedBox(width: 5,),
+                  const SizedBox(
+                    width: 5,
+                  ),
                   Expanded(
                     child: TextFormField(
                       textAlign: TextAlign.center,
@@ -148,7 +183,6 @@ class _OfficeBottomTileState extends State<OfficeBottomTile> {
                           initialTime: TimeOfDay.now(),
                         ).then(
                           (time) {
-
                             _timeController.text = time!.format(context);
                             context.read<ProductChooseCubit>().selectTime(time);
                           },

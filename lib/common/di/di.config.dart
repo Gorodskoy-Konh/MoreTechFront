@@ -48,7 +48,8 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i6.OfficesDataSource>(() => _i7.OfficesDataSourceImpl());
     gh.factory<_i8.OfficesRepository>(() => _i9.OfficesRepositoryMock());
     gh.factory<_i10.OptimalOfficeCubit>(() => _i10.OptimalOfficeCubit());
-    gh.factory<_i11.ProductChooseCubit>(() => _i11.ProductChooseCubit());
+    gh.factory<_i11.ProductChooseCubit>(() => _i11.ProductChooseCubit(
+        officesRepository: gh<_i8.OfficesRepository>()));
     gh.factory<_i12.OfficeCubit>(
         () => _i12.OfficeCubit(gh<_i8.OfficesRepository>()));
     return this;

@@ -4,5 +4,7 @@
   "weekend": "Выходной",
   "suggestOptimalOffice": "Подобрать отделение",
   "chooseProduct": "Выберите продукт",
-  "chooseTime": "Выберите время записи"
+  "chooseTime": "Выберите время записи",
+  "closest": "Самый близкий",
+  "fastest": "Самый быстрый"
 }
