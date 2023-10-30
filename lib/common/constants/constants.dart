@@ -5,7 +5,7 @@ const kDefaultCameraPosition = CameraPosition(
   target: LatLng(55.753927, 37.620531),
   zoom: kDefaultMapZoom,
 );
-const kGoogleApiKey = "AIzaSyDEdr6ih-RBXSKUYx9QDEP-VRRzL8rZC2c";
+const kGoogleApiKey = "...";
 
 const kBaseUrl = '';
 const kGetOffices = '';
